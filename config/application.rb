@@ -34,5 +34,7 @@ module App
     config.api_only = true
 
     config.autoload_paths << Rails.root.join('lib')
+
+    config.asset_host = '/api'
   end
 end
