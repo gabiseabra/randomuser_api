@@ -2,6 +2,8 @@ require 'open-uri'
 require 'resolv-replace'
 
 class UserController < ApplicationController
+  MAX_COUNT = 30
+
   before_action :set_user, only: %i[show]
 
   def index
@@ -12,11 +14,12 @@ class UserController < ApplicationController
   end
 
   def create
-    props = user_params.reverse_merge(count: 0, seed: 'giga')
-    if props[:count].to_i < 0
-      head 400
+    count = user_params[:count].to_i
+    seed = user_params[:seed].to_s || 'giga'
+    if count < 0 || count > MAX_COUNT
+      send '"count" must be between 1 and #{MAX_COUNT} ', 422
     else
-      User.create fetch_users(*props.values_at(:count, :seed))
+      User.create fetch_users(count, seed)
       head 201
     end
   end
