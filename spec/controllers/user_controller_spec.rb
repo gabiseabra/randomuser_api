@@ -3,17 +3,35 @@ require 'rails_helper'
 RSpec.describe UserController, type: :controller do
   let!(:users) { create_list :user, 10 }
   let(:user) { User.last }
-
+  let(:json) { JSON.parse response.body, symbolize_names: true }
+  
   describe 'GET /' do
-    before { get :index }
+    let(:pagination) { JSON.parse response.headers['X-Pagination'], symbolize_names: true }
 
-    it 'Returns a list of users' do
-      json = JSON.parse response.body
-      json.length.should be_between(10, User.per_page)
+    before { get :index, params: { page: page } }
+
+    context 'with valid page range' do
+      let(:page) { 1 }
+
+      it 'Returns a list of users' do
+        json.length.should be_between(10, User.per_page)
+      end
+
+      it 'Responds with a X-Pagination header' do
+        pagination.keys.should eq(%i[entries pages per_page])
+      end
+
+      it 'Responds with status 200' do
+        response.status.should == 200
+      end
     end
 
-    it 'Responds with status 200' do
-      response.status.should == 200
+    context 'with invalid page range' do
+      let(:page) { 0 }
+
+      it 'Responds with status 422' do
+        response.status.should == 422
+      end
     end
   end
 
@@ -24,8 +42,11 @@ RSpec.describe UserController, type: :controller do
       let(:user_id) { user.id }
 
       it 'Returns requested user\'s data' do
-        json = JSON.parse response.body
-        json['id'].should == user_id
+        json[:id].should == user_id
+      end
+
+      it 'Filters allowed properties' do
+        json.keys.should eq(User::JSON)
       end
 
       it 'Responds with status 200' do

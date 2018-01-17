@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-  include ScopeConcern
+  include App::Scopes
+
+  JSON = %i[id title name email phone cel avatar].freeze
 
   mount_uploader :avatar, AvatarUploader
 

@@ -1,4 +1,4 @@
-module ScopeConcern
+module App::Scopes
   extend ActiveSupport::Concern
 
   module ClassMethods

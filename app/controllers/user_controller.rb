@@ -2,17 +2,19 @@ require 'open-uri'
 require 'resolv-replace'
 
 class UserController < ApplicationController
+  include App::Response
   MAX_COUNT = 30
 
   before_action :set_user, only: %i[show]
+  before_action :set_users, only: %i[index]
 
   def index
-    users = User.search(user_params[:q]).paginate(page: user_params[:page])
-    render json: users, status: 200
+    render json: @users, only: User::JSON, status: 200
+    headers['X-Pagination'] = json_pagination @users
   end
 
   def show
-    render json: @user, status: 200
+    render json: @user, only: User::JSON, status: 200
   end
 
   def create
@@ -58,5 +60,14 @@ class UserController < ApplicationController
 
   def set_user
     @user ||= User.find(params[:id])
+  end
+
+  def set_users
+    page = user_params.fetch(:page, 1)
+    begin
+      @users = User.search(user_params[:q]).paginate(page: page.to_i)
+    rescue RangeError
+      render plain: "Invalid page range \"#{page}\"", status: 422
+    end
   end
 end
