@@ -45,7 +45,11 @@ class UserController < ApplicationController
     avatar_url = user[:picture][:medium]
     avatar = open avatar_url
     ext = File.extname avatar_url || '.jpg'
-    App::StringIOFile.new(avatar, "avatar#{ext}")
+    if avatar.is_a?(Tempfile)
+      avatar
+    else
+      App::StringIOFile.new(avatar, "avatar#{ext}")
+    end
   end
 
   def user_params
