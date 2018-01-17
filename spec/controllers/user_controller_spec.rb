@@ -18,7 +18,7 @@ RSpec.describe UserController, type: :controller do
       end
 
       it 'Responds with a X-Pagination header' do
-        pagination.keys.should eq(%i[entries pages per_page])
+        pagination.keys.should eq(%i[entries pages per_page current_page])
       end
 
       it 'Responds with status 200' do

@@ -7,7 +7,8 @@ module App::Response
     {
       entries: collection.total_entries,
       pages: collection.total_pages,
-      per_page: collection.per_page
+      per_page: collection.per_page,
+      current_page: collection.current_page
     }.to_json
   end
 end

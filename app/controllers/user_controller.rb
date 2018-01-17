@@ -3,6 +3,7 @@ require 'resolv-replace'
 
 class UserController < ApplicationController
   include App::Response
+
   MAX_COUNT = 30
 
   before_action :set_user, only: %i[show]
