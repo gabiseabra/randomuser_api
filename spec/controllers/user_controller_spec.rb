@@ -45,5 +45,9 @@ RSpec.describe UserController, type: :controller do
     it 'Creates reqested number of entries' do
       User.count.should == 20
     end
+
+    it 'Uploads user avatars' do
+      User.last.avatar.file.should exist
+    end
   end
 end

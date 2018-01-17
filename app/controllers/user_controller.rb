@@ -28,9 +28,13 @@ class UserController < ApplicationController
     response = open "https://randomuser.me/api?seed=#{seed}&results=#{count}"
     json = JSON.parse response.read, symbolize_names: true
     json[:results].map do |user|
+      avatar_url = user[:picture][:medium]
+      avatar = open avatar_url
+      ext = File.extname avatar_url || ".jpg"
       user.slice(:email, :phone, :cel).merge(
         title: user[:name][:title],
         name: "#{user[:name][:first]} #{user[:name][:last]}",
+        avatar: App::StringIOFile.new(avatar, "avatar#{ext}")
       )
     end
   end
