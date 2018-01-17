@@ -50,3 +50,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # File uploads
 gem 'carrierwave'
+
+# Pagination
+gem 'will_paginate'

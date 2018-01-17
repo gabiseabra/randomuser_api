@@ -7,6 +7,8 @@ class UserController < ApplicationController
   before_action :set_user, only: %i[show]
 
   def index
+    users = User.search(user_params[:q]).paginate(page: user_params[:page])
+    render json: users, status: 200
   end
 
   def show
@@ -17,7 +19,7 @@ class UserController < ApplicationController
     count = user_params[:count].to_i
     seed = user_params[:seed].to_s || 'giga'
     if count < 0 || count > MAX_COUNT
-      send '"count" must be between 1 and #{MAX_COUNT} ', 422
+      render plain: '"count" must be between 1 and #{MAX_COUNT} ', status: 422
     else
       User.create fetch_users(count, seed)
       head 201
@@ -47,7 +49,7 @@ class UserController < ApplicationController
   end
 
   def user_params
-    params.permit :count, :seed
+    params.permit :count, :seed, :q, :page
   end
 
   def set_user

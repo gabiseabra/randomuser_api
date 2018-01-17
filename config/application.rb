@@ -13,6 +13,7 @@ require "action_cable/engine"
 # require "rails/test_unit/railtie"
 require 'carrierwave'
 require 'carrierwave/orm/activerecord'
+require 'will_paginate'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.

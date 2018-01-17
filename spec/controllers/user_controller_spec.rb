@@ -7,7 +7,14 @@ RSpec.describe UserController, type: :controller do
   describe 'GET /' do
     before { get :index }
 
-    it 'Returns a list of users'
+    it 'Returns a list of users' do
+      json = JSON.parse response.body
+      json.length.should be_between(10, User.per_page)
+    end
+
+    it 'Responds with status 200' do
+      response.status.should == 200
+    end
   end
 
   describe 'GET /:id' do
