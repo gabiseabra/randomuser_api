@@ -4,7 +4,7 @@ RSpec.describe UserController, type: :controller do
   let!(:users) { create_list :user, 10 }
   let(:user) { User.last }
   let(:json) { JSON.parse response.body, symbolize_names: true }
-  
+
   describe 'GET /' do
     let(:pagination) { JSON.parse response.headers['X-Pagination'], symbolize_names: true }
 
