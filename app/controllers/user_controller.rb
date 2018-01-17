@@ -45,7 +45,7 @@ class UserController < ApplicationController
   end
 
   def fetch_avatar(user)
-    avatar_url = user[:picture][:medium]
+    avatar_url = user[:picture][:large]
     avatar = open avatar_url
     ext = File.extname avatar_url || '.jpg'
     if avatar.is_a?(Tempfile)
