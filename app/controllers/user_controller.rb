@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'resolv-replace'
+
 class UserController < ApplicationController
   before_action :set_user, only: %i[show]
 
@@ -9,15 +12,34 @@ class UserController < ApplicationController
   end
 
   def create
+    props = user_params.reverse_merge(count: 0, seed: 'giga')
+    if props[:count].to_i < 0
+      head 400
+    else
+      User.create fetch_users(*props.values_at(:count, :seed))
+      head 201
+    end
   end
 
   private
 
+  def fetch_users(count, seed)
+    seed = CGI.escape seed
+    response = open "https://randomuser.me/api?seed=#{seed}&results=#{count}"
+    json = JSON.parse response.read, symbolize_names: true
+    json[:results].map do |user|
+      user.slice(:email, :phone, :cel).merge(
+        title: user[:name][:title],
+        name: "#{user[:name][:first]} #{user[:name][:last]}",
+      )
+    end
+  end
+
   def user_params
-    params.permit(:id)
+    params.permit :count, :seed
   end
 
   def set_user
-    @user ||= User.find(user_params[:id])
+    @user ||= User.find(params[:id])
   end
 end
