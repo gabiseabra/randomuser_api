@@ -36,6 +36,7 @@ class UserController < ApplicationController
     response = open "https://randomuser.me/api?seed=#{seed}&results=#{count}"
     json = JSON.parse response.read, symbolize_names: true
     json[:results].map do |user|
+      puts user
       user.slice(:email, :phone, :cel).merge(
         title: user[:name][:title],
         name: "#{user[:name][:first]} #{user[:name][:last]}",
@@ -72,7 +73,7 @@ class UserController < ApplicationController
 
   def set_users
     begin
-      @users = User.search(user_params[:q]).paginate(pagination)
+      @users = User.search(user_params[:q]).order(created_at: 'DESC').paginate(pagination)
     rescue RangeError
       render plain: "Invalid page range \"#{page}\"", status: 422
     end
