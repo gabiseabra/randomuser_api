@@ -22,7 +22,7 @@ class UserController < ApplicationController
     count = user_params[:count].to_i
     seed = user_params[:seed].to_s || 'giga'
     if count < 0 || count > MAX_COUNT
-      render plain: '"count" must be between 1 and #{MAX_COUNT} ', status: 422
+      render plain: "\"count\" must be between 1 and #{MAX_COUNT}", status: 422
     else
       User.create fetch_users(count, seed)
       head 201
@@ -74,7 +74,7 @@ class UserController < ApplicationController
     begin
       @users = User.search(user_params[:q]).order(created_at: 'DESC').paginate(pagination)
     rescue RangeError
-      render plain: "Invalid page range \"#{page}\"", status: 422
+      render plain: "Invalid page range \"#{pagination.page}\"", status: 422
     end
   end
 end
