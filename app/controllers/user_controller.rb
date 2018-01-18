@@ -56,7 +56,14 @@ class UserController < ApplicationController
   end
 
   def user_params
-    params.permit :count, :seed, :q, :page
+    params.permit :count, :seed, :q, :page, :results
+  end
+
+  def pagination
+    {
+      page: user_params.fetch(:page, 1).to_i,
+      per_page: user_params.fetch(:results, User.per_page).to_i
+    }
   end
 
   def set_user
@@ -64,9 +71,8 @@ class UserController < ApplicationController
   end
 
   def set_users
-    page = user_params.fetch(:page, 1)
     begin
-      @users = User.search(user_params[:q]).paginate(page: page.to_i)
+      @users = User.search(user_params[:q]).paginate(pagination)
     rescue RangeError
       render plain: "Invalid page range \"#{page}\"", status: 422
     end
