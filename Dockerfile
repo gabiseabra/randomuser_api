@@ -25,6 +25,4 @@ COPY . ./
 EXPOSE 3000
 
 # Start server
-# CMD bundle exec puma -C config/puma.rb
-# TODO: Replace dev server
-CMD rails s -p 3000
+CMD bundle exec rails s -p 3000 -b '0.0.0.0'

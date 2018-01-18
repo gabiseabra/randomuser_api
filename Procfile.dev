@@ -1,0 +1,2 @@
+api: rails s -p 3030
+client: cd client && API_PORT=3030 yarn run start

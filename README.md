@@ -1,24 +1,56 @@
-# README
+## RandomUser API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Getting Started
 
-Things you may want to cover:
+### Installation
 
-* Ruby version
+Download the repository
 
-* System dependencies
+```sh
+git clone https://github.com/gabiseabra/randomuser_api
+```
 
-* Configuration
+Install dependencies
 
-* Database creation
+```sh
+bundle & yarn
+```
 
-* Database initialization
+### Development Server
 
-* How to run the test suite
+Run `Procfile.dev` with foreman
 
-* Services (job queues, cache servers, search engines, etc.)
+```sh
+foreman start -f ./Procfile.dev
+```
 
-* Deployment instructions
+**OR**
 
-* ...
+Start both servers simultaneously
+
+```sh
+rails s -p 3030
+```
+
+```sh
+cd client && API_PORT=3030 yarn run start
+```
+
+Dev server can be accessed at http://localhost:3000 by default.
+
+### Tests
+
+Run tests with rspec
+
+```sh
+bundle exec rspec
+```
+
+### Docker
+
+Set `SECRET_KEY_BASE` in the .env file and use docker-compose to build the containers.
+
+```sh
+docker-compose up
+```
+

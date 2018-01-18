@@ -1,0 +1,11 @@
+{
+  "name": "randomuser_api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "cd client && yarn install --production=false",
+    "start": "foreman start -f Procfile.dev",
+    "build": "cd client && yarn run build",
+    "test": "bundle exec test"
+  }
+}
