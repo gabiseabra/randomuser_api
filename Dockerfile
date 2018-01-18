@@ -25,4 +25,4 @@ COPY . ./
 EXPOSE 3000
 
 # Start server
-CMD bundle exec rails s -p 3000 -b '0.0.0.0'
+CMD bundle exec puma -b 'tcp://0.0.0.0:3000'

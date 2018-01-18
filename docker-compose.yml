@@ -2,6 +2,10 @@ version: "3"
 services:
   postgres:
     image: postgres:alpine
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=randomuser
     expose:
       - "5432"
 
@@ -11,8 +15,10 @@ services:
       args:
         - SECRET_KEY_BASE=${SECRET_KEY_BASE}
     container_name: randomuser_api
-    ports:
-      - 3030:3000
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=randomuser
     expose:
       - "3000"
     depends_on:
