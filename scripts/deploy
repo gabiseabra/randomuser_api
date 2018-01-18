@@ -1,0 +1,17 @@
+#!/bin/sh
+
+TMP_FILE=.app.yaml
+
+if [ -e .env ]; then
+  export $(cat .env | xargs)
+fi
+if [ -e .env.gcp ]; then
+  export $(cat .env.gcp | xargs)
+fi
+export GCP_PROJECT_ID=${GCP_PROJECT_ID:-randomuser-giga}
+
+envsubst < app.yaml > $TMP_FILE
+
+gcloud app deploy $TMP_FILE
+
+rm $TMP_FILE

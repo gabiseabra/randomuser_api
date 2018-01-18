@@ -1,0 +1,30 @@
+runtime: custom
+api_version: 1
+env: flex
+service: api
+
+manual_scaling:
+  instances: 1
+
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+
+skip_files:
+  - client/
+  - nginx/
+  - node_modules/
+
+env_variables:
+  DB_NAME: ${DB_NAME}
+  DB_USER: ${DB_USER}
+  DB_PASS: ${DB_PASS}
+  DB_HOST: /cloudsql/randomuser-giga:southamerica-east1:randomuser-db
+
+beta_settings:
+  cloud_sql_instances: randomuser-giga:southamerica-east1:randomuser-db
+
+network:
+  forwarded_ports:
+    - 80:3000

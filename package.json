@@ -6,6 +6,7 @@
     "postinstall": "cd client && yarn install --production=false",
     "start": "foreman start -f Procfile.dev",
     "build": "cd client && yarn run build",
-    "test": "bundle exec test"
+    "test": "bundle exec test",
+    "deploy": "./scripts/deploy"
   }
 }

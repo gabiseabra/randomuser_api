@@ -35,6 +35,6 @@ module App
 
     config.autoload_paths << Rails.root.join('lib')
 
-    config.asset_host = '/api'
+    config.asset_host = ENV.fetch('ASSET_HOST', '/api')
   end
 end
