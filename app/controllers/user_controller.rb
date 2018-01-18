@@ -61,10 +61,10 @@ class UserController < ApplicationController
   end
 
   def pagination
-    {
-      page: user_params.fetch(:page, 1).to_i,
-      per_page: user_params.fetch(:results, User.per_page).to_i
-    }
+    page = user_params.fetch(:page, 1).to_i,
+    per_page = user_params.fetch(:results, User.per_page).to_i
+    per_page = [per_page, MAX_COUNT].min
+    { page: page, per_page: per_page }
   end
 
   def set_user
