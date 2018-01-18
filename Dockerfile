@@ -22,7 +22,7 @@ ENV SECRET_KEY_BASE $SECRET_KEY_BASE
 # Copy the main application.
 COPY . ./
 
-EXPOSE 3000
+EXPOSE 8080
 
 # Start server
-CMD bundle exec puma -b 'tcp://0.0.0.0:3000'
+CMD bundle exec puma -b 'tcp://0.0.0.0:8080'

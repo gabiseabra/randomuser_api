@@ -25,10 +25,6 @@ env_variables:
 beta_settings:
   cloud_sql_instances: randomuser-giga:southamerica-east1:randomuser-db
 
-network:
-  forwarded_ports:
-    - 80:3000
-
 liveness_check:
   path: /api/user
   check_interval_sec: 30
