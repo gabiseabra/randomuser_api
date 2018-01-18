@@ -36,8 +36,8 @@ class UserController < ApplicationController
     response = open "https://randomuser.me/api?seed=#{seed}&results=#{count}"
     json = JSON.parse response.read, symbolize_names: true
     json[:results].map do |user|
-      puts user
-      user.slice(:email, :phone, :cel).merge(
+      user.slice(:email, :phone).merge(
+        cel: user[:cell],
         title: user[:name][:title],
         name: "#{user[:name][:first]} #{user[:name][:last]}",
         avatar: fetch_avatar(user)
