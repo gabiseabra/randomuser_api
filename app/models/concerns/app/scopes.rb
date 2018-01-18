@@ -6,7 +6,7 @@ module App::Scopes
       fields = Array(fields)
       terms = Array(terms)
       result = fields.product(terms).map do |(field, value)|
-        arel_table[field].matches("#{value}%")
+        arel_table[field].matches("%#{value}%")
       end
       where(result.inject(:or))
     end
