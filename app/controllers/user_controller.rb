@@ -4,7 +4,7 @@ require 'resolv-replace'
 class UserController < ApplicationController
   include App::Response
 
-  MAX_COUNT = 30
+  MAX_COUNT = 50
 
   before_action :set_user, only: %i[show]
   before_action :set_users, only: %i[index]
@@ -61,10 +61,9 @@ class UserController < ApplicationController
   end
 
   def pagination
-    page = user_params.fetch(:page, 1).to_i,
+    page = user_params.fetch(:page, 1).to_i
     per_page = user_params.fetch(:results, User.per_page).to_i
-    per_page = [per_page, MAX_COUNT].min
-    { page: page, per_page: per_page }
+    { page: page, per_page: [per_page, MAX_COUNT].min }
   end
 
   def set_user
