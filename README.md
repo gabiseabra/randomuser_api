@@ -54,3 +54,9 @@ Set `SECRET_KEY_BASE` in the .env file and use docker-compose to build the conta
 docker-compose up
 ```
 
+And setup the database after building
+
+```sh
+docker exec randomuser_api bundle exec rails db:setup
+```
+
