@@ -15,6 +15,6 @@ class User < ApplicationRecord
 
   def capitalize_names
     self.name = name.split.map(&:capitalize).join(' ')
-    self.title = title.capitlize
+    self.title = title.capitalize
   end
 end
