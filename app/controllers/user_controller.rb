@@ -74,7 +74,7 @@ class UserController < ApplicationController
     begin
       @users = User.search(user_params[:q]).order(created_at: 'DESC').paginate(pagination)
     rescue RangeError
-      render plain: "Invalid page range \"#{pagination.page}\"", status: 422
+      render plain: "Invalid page range \"#{pagination[:page]}\"", status: 422
     end
   end
 end
