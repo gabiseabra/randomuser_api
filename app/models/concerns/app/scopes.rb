@@ -5,14 +5,10 @@ module App::Scopes
     def like_any(fields, terms)
       fields = Array(fields)
       terms = Array(terms)
-      fields.product(terms).inject do |query, (field, value)|
-        condition = arel_table[field].matches("#{value}%")
-        if query
-          query.or(condition)
-        else
-          condition
-        end
+      result = fields.product(terms).map do |(field, value)|
+        arel_table[field].matches("#{value}%")
       end
+      where(result.inject(:or))
     end
   end
 end

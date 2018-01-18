@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
-  scope :search, ->(term) { like_any(%i[name email], term) }
+  scope :search, ->(term) { term.present? ? like_any(%i[name email], term) : all }
 
   self.per_page = 15
 
