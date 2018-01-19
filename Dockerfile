@@ -15,9 +15,10 @@ ENV RAILS_ENV production
 ENV RACK_ENV production
 ENV RAILS_ROOT /usr/src/app
 ENV RAILS_SERVE_STATIC_FILES 1
-# You must pass environment variable SECRET_KEY_BASE
-ARG SECRET_KEY_BASE
-ENV SECRET_KEY_BASE $SECRET_KEY_BASE
+# You must pass the environment variable SECRET_KEY_BASE
+# GCP does not support Dockerfile's ARG
+# ARG SECRET_KEY_BASE
+# ENV SECRET_KEY_BASE $SECRET_KEY_BASE
 
 # Copy the main application.
 COPY . ./
